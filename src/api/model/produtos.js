@@ -18,6 +18,8 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.NUMERIC,
             allowNull: false
         }
+    }, {
+        timestamps: false
     });
     return produtos;
 }

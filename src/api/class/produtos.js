@@ -8,7 +8,7 @@ exports.produtosCriar = async (dados) => {
 }
 
 exports.produtosEditar = async (dados) => {
-    const produto = await db.findByPk(dados.codigo);
+    const produto = await db.produtos.findByPk(dados.codigo);
 
     if(!produto){
         throw new APIError(404, 'Produto não encontrado', undefined);
@@ -18,6 +18,14 @@ exports.produtosEditar = async (dados) => {
 
     if(dados.descricao){
         dadosAtualizar.descricao = dados.descricao;
+    }
+
+    if(dados.valor){
+        dadosAtualizar.valor = dados.valor;
+    }
+
+    if(dados.quantidade){
+        dadosAtualizar.quantidade = dados.quantidade;
     }
 
     await db.produtos.update(dadosAtualizar, {

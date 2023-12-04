@@ -19,9 +19,9 @@ exports.putVendas = async (req, res) => {
 
   if (!codigo) {
     return responses.sendResponse(res, 400, true, 'Código não informado.', null)
-  }x
+  }
 
-  const {horario, valor_total} = req.body
+  const {horario, valor_total, funcionarios_cod} = req.body
 
   if (horario) {
     return responses.sendResponse(
@@ -33,7 +33,7 @@ exports.putVendas = async (req, res) => {
     )
   }
 
-  const dados = {codigo, valor_total}
+  const dados = {codigo, valor_total, funcionarios_cod}
 
   const result = await classVendas.vendasEditar(dados)
 

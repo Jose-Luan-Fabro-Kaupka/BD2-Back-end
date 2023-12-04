@@ -8,7 +8,7 @@ exports.vendasCriar = async (dados) => {
 }
 
 exports.vendasEditar = async (dados) => {
-    const venda = await db.findByPk(dados.codigo);
+    const venda = await db.vendas.findByPk(dados.codigo);
 
     if(!venda){
         throw new APIError(404, 'Venda não encontrada', undefined);
@@ -16,8 +16,12 @@ exports.vendasEditar = async (dados) => {
 
     const dadosAtualizar = {}
 
-    if(dados.descricao){
-        dadosAtualizar.descricao = dados.descricao;
+    if(dados.valor_total){
+        dadosAtualizar.valor_total = dados.valor_total;
+    }
+
+    if(dados.funcionarios_cod){
+        dadosAtualizar.funcionarios_cod = dados.funcionarios_cod;
     }
 
     await db.vendas.update(dadosAtualizar, {

@@ -8,7 +8,7 @@ exports.itensCriar = async (dados) => {
 }
 
 exports.itensEditar = async (dados) => {
-    const item = await db.findByPk(dados.codigo);
+    const item = await db.itens.findByPk(dados.codigo);
 
     if(!item){
         throw new APIError(404, 'Item não encontrado', undefined);

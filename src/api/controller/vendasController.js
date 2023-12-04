@@ -15,10 +15,10 @@ exports.postVendas = async (req, res) => {
 }
 
 exports.putVendas = async (req, res) => {
-  const { id } = req.query
+  const { codigo } = req.params
 
-  if (!id) {
-    return responses.sendResponse(res, 400, true, 'Id não informado.', null)
+  if (!codigo) {
+    return responses.sendResponse(res, 400, true, 'Código não informado.', null)
   }x
 
   const {horario, valor_total} = req.body
@@ -33,7 +33,7 @@ exports.putVendas = async (req, res) => {
     )
   }
 
-  const dados = {id, valor_total}
+  const dados = {codigo, valor_total}
 
   const result = await classVendas.vendasEditar(dados)
 
@@ -41,24 +41,24 @@ exports.putVendas = async (req, res) => {
 }
 
 exports.getVendas = async (req, res) => {
-  const { id } = req.query
+  const { codigo } = req.params
 
-  if (!id) {
-    return responses.sendResponse(res, 400, true, 'Id não informado.', null)
+  if (!codigo) {
+    return responses.sendResponse(res, 400, true, 'Código não informado.', null)
   }
 
-  const result = await classVendas.vendasConsultar(id)
+  const result = await classVendas.vendasConsultar(codigo)
   return responses.sendResponse(res, 200, false, 'OK.', result)
 }
 
 exports.deleteVendas = async (req, res) => {
-  const { id } = req.query
+  const { codigo } = req.params
 
-  if (!id) {
-    return responses.sendResponse(res, 400, true, 'Id não informado.', null)
+  if (!codigo) {
+    return responses.sendResponse(res, 400, true, 'Código não informado.', null)
   }
 
-  await classVendas.vendasDeletar(id)
+  await classVendas.vendasDeletar(codigo)
 
   return responses.sendResponse(res, 204, false, 'Venda eliminada com sucesso.', null)
 }

@@ -3,14 +3,14 @@ const db = require('../../config/sequelize_db');
 const APIError = require('../errors/api.error');
 
 exports.produtosCriar = async (dados) => {
-    const novoItem = await db.produtos.create(dados);
-    return novoItem;
+    const novoProduto = await db.produtos.create(dados);
+    return novoProduto;
 }
 
 exports.produtosEditar = async (dados) => {
-    const item = await db.findByPk(dados.id);
+    const produto = await db.findByPk(dados.codigo);
 
-    if(!item){
+    if(!produto){
         throw new APIError(404, 'Produto não encontrado', undefined);
     }
 
@@ -22,35 +22,39 @@ exports.produtosEditar = async (dados) => {
 
     await db.produtos.update(dadosAtualizar, {
         where: {
-            id: dados.id
+            codigo: dados.codigo
         }
     })
 
-    const itemAtualizado = db.produtos.findByPk();
+    const produtoAtualizado = db.produtos.findByPk();
 
-    return itemAtualizado;
+    return produtoAtualizado;
 }
 
 exports.produtosConsultar = async (dados) => {
-    const item = await db.produtos.findByPk(id);
+    const codigo = dados;
 
-    if(!item){
-        throw new APIError(404, 'Item não encontrado', undefined);
+    const produto = await db.produtos.findByPk(codigo);
+
+    if(!produto){
+        throw new APIError(404, 'produto não encontrado', undefined);
     }
 
-    return item;
+    return produto;
 }
 
 exports.produtosDeletar = async (dados) => {
-    const item = await db.produtos.findByPk(id);
+    const codigo = dados;
 
-    if(!item){
+    const produto = await db.produtos.findByPk(codigo);
+
+    if(!produto){
         throw new APIError(404, 'Produto não encontrado', undefined);
     }
 
     await db.produtos.destroy({
         where: {
-            id: id
+            codigo: codigo
         }
     })
 }

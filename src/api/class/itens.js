@@ -8,7 +8,7 @@ exports.itensCriar = async (dados) => {
 }
 
 exports.itensEditar = async (dados) => {
-    const item = await db.findByPk(dados.id);
+    const item = await db.findByPk(dados.codigo);
 
     if(!item){
         throw new APIError(404, 'Item não encontrado', undefined);
@@ -22,17 +22,19 @@ exports.itensEditar = async (dados) => {
 
     await db.itens.update(dadosAtualizar, {
         where: {
-            id: dados.id
+            codigo: dados.codigo
         }
     })
 
-    const itemAtualizado = db.itens.findByPk();
+    const itemAtualizado = db.itens.findByPk(dados.codigo);
 
     return itemAtualizado;
 }
 
 exports.itensConsultar = async (dados) => {
-    const item = await db.itens.findByPk(id);
+    const codigo = dados
+
+    const item = await db.itens.findByPk(codigo);
 
     if(!item){
         throw new APIError(404, 'Item não encontrado', undefined);
@@ -42,7 +44,9 @@ exports.itensConsultar = async (dados) => {
 }
 
 exports.itensDeletar = async (dados) => {
-    const item = await db.itens.findByPk(id);
+    const codigo =  dados
+
+    const item = await db.itens.findByPk(codigo);
 
     if(!item){
         throw new APIError(404, 'Item não encontrado', undefined);
@@ -50,7 +54,7 @@ exports.itensDeletar = async (dados) => {
 
     await db.itens.destroy({
         where: {
-            id: id
+            codigo: codigo
         }
     })
 }

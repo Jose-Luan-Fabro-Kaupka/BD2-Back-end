@@ -8,7 +8,7 @@ exports.vendasCriar = async (dados) => {
 }
 
 exports.vendasEditar = async (dados) => {
-    const venda = await db.findByPk(dados.id);
+    const venda = await db.findByPk(dados.codigo);
 
     if(!venda){
         throw new APIError(404, 'Venda não encontrada', undefined);
@@ -22,17 +22,19 @@ exports.vendasEditar = async (dados) => {
 
     await db.vendas.update(dadosAtualizar, {
         where: {
-            id: dados.id
+            codigo: dados.codigo
         }
     })
 
-    const vendaAtualizada = db.vendas.findByPk();
+    const vendaAtualizada = db.vendas.findByPk(dados.codigo);
 
     return vendaAtualizada;
 }
 
 exports.vendasConsultar = async (dados) => {
-    const venda = await db.vendas.findByPk(id);
+    const codigo = dados
+
+    const venda = await db.vendas.findByPk(codigo);
 
     if(!venda){
         throw new APIError(404, 'Venda não encontrada', undefined);
@@ -42,7 +44,9 @@ exports.vendasConsultar = async (dados) => {
 }
 
 exports.vendasDeletar = async (dados) => {
-    const venda = await db.vendas.findByPk(id);
+    const codigo = dados
+
+    const venda = await db.vendas.findByPk(codigo);
 
     if(!venda){
         throw new APIError(404, 'Venda não encontrada', undefined);
@@ -50,7 +54,7 @@ exports.vendasDeletar = async (dados) => {
 
     await db.vendas.destroy({
         where: {
-            id: id
+            codigo: codigo
         }
     })
 }

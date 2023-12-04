@@ -19,7 +19,7 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: false
         },
         funcao:{
-            type: Sequelize.STRING,
+            type: Sequelize.INTEGER,
             allowNull: false
         }
     }, {

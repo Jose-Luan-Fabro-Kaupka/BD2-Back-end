@@ -15,15 +15,15 @@ exports.postItens = async (req, res) => {
 }
 
 exports.putItens = async (req, res) => {
-  const { id } = req.query
+  const { codigo } = req.params
 
-  if (!id) {
-    return responses.sendResponse(res, 400, true, 'Id não informado.', null)
+  if (!codigo) {
+    return responses.sendResponse(res, 400, true, 'Código não informado.', null)
   }
 
   const { quantidade, valor_parcial } = req.body
 
-  const dados = { id, descricao }
+  const dados = { codigo, descricao }
 
   const result = await classItens.itensEditar(dados)
 
@@ -31,24 +31,24 @@ exports.putItens = async (req, res) => {
 }
 
 exports.getItens = async (req, res) => {
-  const { id } = req.query
+  const { codigo } = req.params
 
-  if (!id) {
-    return responses.sendResponse(res, 400, true, 'Id não informado.', null)
+  if (!codigo) {
+    return responses.sendResponse(res, 400, true, 'Código não informado.', null)
   }
 
-  const result = await classItens.itensConsultar(id)
+  const result = await classItens.itensConsultar(codigo)
   return responses.sendResponse(res, 200, false, 'OK.', result)
 }
 
 exports.deleteItens = async (req, res) => {
-  const { id } = req.query
+  const { codigo } = req.params
 
-  if (!id) {
-    return responses.sendResponse(res, 400, true, 'Id não informado.', null)
+  if (!codigo) {
+    return responses.sendResponse(res, 400, true, 'Código não informado.', null)
   }
 
-  await classItens.itensDeletar(id)
+  await classItens.itensDeletar(codigo)
 
   return responses.sendResponse(res, 204, false, 'Item eliminado com sucesso.', null)
 }

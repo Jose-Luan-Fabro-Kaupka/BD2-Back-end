@@ -3,6 +3,7 @@ const router = express.Router();
 const itensController = require('../controller/itensController');
 const produtosController = require('../controller/produtosController');
 const vendasController = require('../controller/vendasController');
+const backup = require("../model/backup.js");
 
 //Itens
 router.get('/itens/:codigo', (req, res) => itensController.getItens(req, res));
@@ -30,5 +31,9 @@ router.post('/vendas', (req, res) => vendasController.postVendas(req, res));
 router.put('/vendas/:codigo', (req, res) => vendasController.putVendas(req, res));
 
 router.delete('/vendas/:codigo', (req, res) => vendasController.deleteVendas(req, res));
+
+//backup
+
+router.post('/backup', (req, res) => backup.realizarBackup());
 
 module.exports = router;

@@ -2,13 +2,13 @@ const classProdutos = require('../class/produtos.js')
 const responses = require('../helper/responses')
 
 exports.postProdutos = async (req, res) => {
-  const {descricao, valor, quantidade} = req.body
+  const {descricao, valor, quantidade, fornecedores_cod} = req.body
 
-  if (!descricao || !valor || !quantidade) {
+  if (!descricao || !valor || !quantidade || !fornecedores_cod) {
     return responses.sendResponse(res, 400, true, 'Campos obrigatórios não informados.', null)
   }
 
-  const dados = {descricao, valor, quantidade}
+  const dados = {descricao, valor, quantidade, fornecedores_cod}
 
   const result = await classProdutos.produtosCriar(dados)
   return responses.sendResponse(res, 201, false, 'Produto criado com sucesso.', result)
@@ -31,13 +31,7 @@ exports.putProdutos = async (req, res) => {
 }
 
 exports.getProdutos = async (req, res) => {
-  const { codigo } = req.params;
-
-  if (!codigo) {
-    return responses.sendResponse(res, 400, true, 'Código não informado.', null)
-  }
-
-  const result = await classProdutos.produtosConsultar(codigo)
+  const result = await classProdutos.produtosConsultar()
   return responses.sendResponse(res, 200, false, 'OK.', result)
 }
 

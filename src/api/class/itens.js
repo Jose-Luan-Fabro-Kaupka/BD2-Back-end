@@ -31,14 +31,8 @@ exports.itensEditar = async (dados) => {
     return itemAtualizado;
 }
 
-exports.itensConsultar = async (dados) => {
-    const codigo = dados
-
-    const item = await db.itens.findByPk(codigo);
-
-    if(!item){
-        throw new APIError(404, 'Item não encontrado', undefined);
-    }
+exports.itensConsultar = async () => {
+    const item = await db.itens.findAll();
 
     return item;
 }

@@ -2,13 +2,13 @@ const classVendas = require('../class/vendas')
 const responses = require('../helper/responses')
 
 exports.postVendas = async (req, res) => {
-  const {horario, valor_total} = req.body
+  const {horario, valor_total, funcionarios_cod} = req.body
 
-  if (!horario || !valor_total) {
+  if (!horario || !valor_total || !funcionarios_cod) {
     return responses.sendResponse(res, 400, true, 'Campos obrigatórios não informados.', null)
   }
 
-  const dados = {horario, valor_total}
+  const dados = {horario, valor_total, funcionarios_cod}
 
   const result = await classVendas.vendasCriar(dados)
   return responses.sendResponse(res, 201, false, 'Venda criada com sucesso.', result)
@@ -21,7 +21,7 @@ exports.putVendas = async (req, res) => {
     return responses.sendResponse(res, 400, true, 'Código não informado.', null)
   }
 
-  const {horario, valor_total, funcionarios_cod} = req.body
+  const {horario, valor_total} = req.body
 
   if (horario) {
     return responses.sendResponse(
@@ -33,7 +33,7 @@ exports.putVendas = async (req, res) => {
     )
   }
 
-  const dados = {codigo, valor_total, funcionarios_cod}
+  const dados = {codigo, valor_total}
 
   const result = await classVendas.vendasEditar(dados)
 
@@ -41,13 +41,7 @@ exports.putVendas = async (req, res) => {
 }
 
 exports.getVendas = async (req, res) => {
-  const { codigo } = req.params
-
-  if (!codigo) {
-    return responses.sendResponse(res, 400, true, 'Código não informado.', null)
-  }
-
-  const result = await classVendas.vendasConsultar(codigo)
+  const result = await classVendas.vendasConsultar()
   return responses.sendResponse(res, 200, false, 'OK.', result)
 }
 

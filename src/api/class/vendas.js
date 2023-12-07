@@ -35,10 +35,8 @@ exports.vendasEditar = async (dados) => {
     return vendaAtualizada;
 }
 
-exports.vendasConsultar = async (dados) => {
-    const codigo = dados
-
-    const venda = await db.vendas.findByPk(codigo);
+exports.vendasConsultar = async () => {
+    const venda = await db.vendas.findAll();
 
     if(!venda){
         throw new APIError(404, 'Venda não encontrada', undefined);

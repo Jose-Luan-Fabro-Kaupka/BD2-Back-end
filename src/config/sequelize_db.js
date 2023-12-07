@@ -26,6 +26,16 @@ db.vendas.belongsTo(db.funcionarios, {
   foreignKey: 'funcionarios_cod',
 });
 
+db.itens.belongsTo(db.vendas, {
+  as: 'venda',
+  foreignKey: 'vendas_cod',
+});
+
+db.vendas.hasMany(db.itens, {
+  as: 'itens',
+  foreignKey: 'vendas_cod',
+});
+
 db.produtos.belongsTo(db.fornecedores, {
   as: 'fornecedores',
   foreignKey: 'fornecedores_cod',

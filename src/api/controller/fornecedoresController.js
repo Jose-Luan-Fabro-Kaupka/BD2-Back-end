@@ -1,48 +1,48 @@
-const classItens = require('../class/itens')
+const classFornecedores = require('../class/fornecedores')
 const responses = require('../helper/responses')
 
-exports.postItens = async (req, res) => {
-  const {quantidade, valor_parcial, vendas_cod, produtos_cod} = req.body
+exports.postFornecedores = async (req, res) => {
+  const { nome } = req.body
 
-  if (!quantidade || !valor_parcial || !vendas_cod || !produtos_cod) {
+  if (!nome) {
     return responses.sendResponse(res, 400, true, 'Campos obrigatórios não informados.', null)
   }
+  
+  const dados = {nome}
 
-  const dados = {quantidade, valor_parcial, vendas_cod, produtos_cod}
-
-  const result = await classItens.itensCriar(dados)
+  const result = await classFornecedores.fornecedoresCriar(dados)
   return responses.sendResponse(res, 201, false, 'Item criado com sucesso.', result)
 }
 
-exports.putItens = async (req, res) => {
+exports.putFornecedores = async (req, res) => {
   const { codigo } = req.params
 
   if (!codigo) {
     return responses.sendResponse(res, 400, true, 'Código não informado.', null)
   }
 
-  const { quantidade, valor_parcial} = req.body
+  const { nome} = req.body
 
   const dados = { codigo, descricao}
 
-  const result = await classItens.itensEditar(dados)
+  const result = await classFornecedores.fornecedoresEditar(dados)
 
   return responses.sendResponse(res, 200, false, 'OK.', result)
 }
 
-exports.getItens = async (req, res) => {
-  const result = await classItens.itensConsultar()
+exports.getFornecedores = async (req, res) => {
+  const result = await classFornecedores.fornecedoresConsultar()
   return responses.sendResponse(res, 200, false, 'OK.', result)
 }
 
-exports.deleteItens = async (req, res) => {
+exports.deleteFornecedores = async (req, res) => {
   const { codigo } = req.params
 
   if (!codigo) {
     return responses.sendResponse(res, 400, true, 'Código não informado.', null)
   }
 
-  await classItens.itensDeletar(codigo)
+  await classFornecedores.fornecedoresDeletar(codigo)
 
   return responses.sendResponse(res, 204, false, 'Item eliminado com sucesso.', null)
 }

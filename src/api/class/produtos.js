@@ -39,10 +39,8 @@ exports.produtosEditar = async (dados) => {
     return produtoAtualizado;
 }
 
-exports.produtosConsultar = async (dados) => {
-    const codigo = dados;
-
-    const produto = await db.produtos.findByPk(codigo);
+exports.produtosConsultar = async () => {
+    const produto = await db.produtos.findAll();
 
     if(!produto){
         throw new APIError(404, 'produto não encontrado', undefined);

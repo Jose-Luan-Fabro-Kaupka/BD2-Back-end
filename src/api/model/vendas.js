@@ -9,10 +9,6 @@ module.exports = (sequelize, Sequelize) => {
         horario:{
             type: Sequelize.DATE,
             allowNull: false
-        },
-        valor_total:{
-            type: Sequelize.NUMERIC,
-            allowNull: false
         }
     }, {
         timestamps: false

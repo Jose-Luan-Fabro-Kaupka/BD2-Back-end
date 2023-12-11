@@ -8,8 +8,8 @@ const LOG_LEVEL = process.env.LOG_LEVEL || 'warn'
 
 /* DATABASE CONFIGURATION */
 const POSTGRES_HOST = process.env.POSTGRES_HOST || 'localhost'
-const POSTGRES_USER = process.env.POSTGRES_USER || 'postgres'
-const POSTGRES_PASS = process.env.POSTGRES_PASS || 'postgres123'
+const POSTGRES_USER = process.env.POSTGRES_USER || 'postgres' //login.getLogin();
+const POSTGRES_PASS = process.env.POSTGRES_PASS || 'postgres123' //login.getSenha();
 const POSTGRES_DATABASE = process.env.POSTGRES_DATABASE || 'bd2t2'
 
 module.exports = {

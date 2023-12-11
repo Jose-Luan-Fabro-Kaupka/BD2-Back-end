@@ -11,7 +11,7 @@ exports.postFornecedores = async (req, res) => {
   const dados = {nome}
 
   const result = await classFornecedores.fornecedoresCriar(dados)
-  return responses.sendResponse(res, 201, false, 'Item criado com sucesso.', result)
+  return responses.sendResponse(res, 201, false, 'Fornecedor criado com sucesso.', result)
 }
 
 exports.putFornecedores = async (req, res) => {
@@ -21,7 +21,7 @@ exports.putFornecedores = async (req, res) => {
     return responses.sendResponse(res, 400, true, 'Código não informado.', null)
   }
 
-  const { nome} = req.body
+  const { nome } = req.body
 
   const dados = { codigo, descricao}
 
@@ -31,8 +31,12 @@ exports.putFornecedores = async (req, res) => {
 }
 
 exports.getFornecedores = async (req, res) => {
-  const result = await classFornecedores.fornecedoresConsultar()
-  return responses.sendResponse(res, 200, false, 'OK.', result)
+  try{
+    const result = await classFornecedores.fornecedoresConsultar()
+    return responses.sendResponse(res, 200, false, 'OK.', result)
+  } catch(erro){
+      return responses.sendResponse(res, 500, true, 'Erro ao buscar fornecedores.', null);
+  }
 }
 
 exports.deleteFornecedores = async (req, res) => {
@@ -44,5 +48,5 @@ exports.deleteFornecedores = async (req, res) => {
 
   await classFornecedores.fornecedoresDeletar(codigo)
 
-  return responses.sendResponse(res, 204, false, 'Item eliminado com sucesso.', null)
+  return responses.sendResponse(res, 204, false, 'Fornecedor eliminado com sucesso.', null)
 }

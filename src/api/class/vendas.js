@@ -3,48 +3,53 @@ const db = require('../../config/sequelize_db');
 const APIError = require('../errors/api.error');
 
 exports.vendasCriar = async (dados) => {
+    
     const novaVenda = await db.vendas.create(dados);
     return novaVenda;
 }
 
-exports.vendasEditar = async (dados) => {
-    const venda = await db.vendas.findByPk(dados.codigo);
-
-    if(!venda){
-        throw new APIError(404, 'Venda não encontrada', undefined);
-    }
-
-    const dadosAtualizar = {}
-
-    if(dados.valor_total){
-        dadosAtualizar.valor_total = dados.valor_total;
-    }
-
-    if(dados.funcionarios_cod){
-        dadosAtualizar.funcionarios_cod = dados.funcionarios_cod;
-    }
-
-    await db.vendas.update(dadosAtualizar, {
-        where: {
-            codigo: dados.codigo
-        }
-    })
-
-    const vendaAtualizada = db.vendas.findByPk(dados.codigo);
-
-    return vendaAtualizada;
-}
-
 exports.vendasConsultar = async () => {
-    const venda = await db.vendas.findAll();
-
-    if(!venda){
-        throw new APIError(404, 'Venda não encontrada', undefined);
+    try {
+      const vendas = await db.vendas.findAll({
+        include: [
+          {
+            model: db.itens,
+            as: 'itens',
+            include: [
+              {
+                model: db.produtos,
+                as: 'produtos',
+                attributes: ['codigo', 'descricao', 'valor', 'quantidade']
+              }
+            ],
+            attributes: ['codigo', 'quantidade', 'valor_parcial']
+          }
+        ],
+        attributes: ['codigo', 'horario'], // Remova 'valor_total' daqui
+        raw: true, // Para obter os resultados como objetos JavaScript simples
+      });
+  
+      // Calcular o valor total para cada venda
+      const vendasComValorTotal = await Promise.all(vendas.map(async (venda) => {
+        const valorTotal = await db.itens.sum('valor_parcial', {
+          where: {
+            vendas_cod: venda.codigo, // Filtra os itens pela venda específica
+          },
+          raw: true,
+        });
+  
+        return {
+          ...venda,
+          valor_total: valorTotal || 0, // Define o valor total da venda
+        };
+      }));
+  
+      return vendasComValorTotal;
+    } catch (error) {
+      throw new APIError(500, 'Erro ao buscar vendas.', error);
     }
-
-    return venda;
-}
-
+  };
+  
 exports.vendasDeletar = async (dados) => {
     const codigo = dados
 

@@ -1,6 +1,7 @@
 const logger = require('../helper/logger');
 const db = require('../../config/sequelize_db');
 const APIError = require('../errors/api.error');
+const { where } = require('sequelize');
 
 exports.itensCriar = async (dados) => {
     const novoItem = await db.itens.create(dados);
@@ -33,7 +34,6 @@ exports.itensEditar = async (dados) => {
 
 exports.itensConsultar = async () => {
     const item = await db.itens.findAll();
-
     return item;
 }
 

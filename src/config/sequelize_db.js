@@ -46,9 +46,4 @@ db.itens.belongsTo(db.produtos, {
   foreignKey: 'produtos_cod',
 });
 
-db.itens.belongsTo(db.funcionarios, {
-  as: 'funcionarios',
-  foreignKey: 'funcionarios_cod',
-});
-
 module.exports = db;

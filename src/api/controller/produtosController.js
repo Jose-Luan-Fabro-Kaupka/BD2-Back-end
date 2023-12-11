@@ -31,8 +31,12 @@ exports.putProdutos = async (req, res) => {
 }
 
 exports.getProdutos = async (req, res) => {
-  const result = await classProdutos.produtosConsultar()
-  return responses.sendResponse(res, 200, false, 'OK.', result)
+  try{
+    const result = await classProdutos.produtosConsultar()
+    return responses.sendResponse(res, 200, false, 'OK.', result)
+  }catch(erro){
+    return responses.sendResponse(res, 500, true, 'Erro ao buscar itens.', null);
+  }
 }
 
 exports.deleteProdutos = async (req, res) => {

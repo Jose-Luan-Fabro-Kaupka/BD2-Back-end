@@ -4,6 +4,7 @@ const itensController = require('../controller/itensController');
 const produtosController = require('../controller/produtosController');
 const vendasController = require('../controller/vendasController');
 const forncedoresController = require('../controller/fornecedoresController');
+const funcionariosController = require('../controller/funcionariosController');
 const backup = require("../model/backup.js");
 
 //Itens
@@ -29,8 +30,6 @@ router.get('/vendas', (req, res) => vendasController.getVendas(req, res));
 
 router.post('/vendas', (req, res) => vendasController.postVendas(req, res));
 
-router.put('/vendas/:codigo', (req, res) => vendasController.putVendas(req, res));
-
 router.delete('/vendas/:codigo', (req, res) => vendasController.deleteVendas(req, res));
 
 //Fornecedores
@@ -43,8 +42,22 @@ router.put('/fornecedores/:codigo', (req, res) => forncedoresController.putForne
 
 router.delete('/fornecedores/:codigo', (req, res) => forncedoresController.deleteFornecedores(req, res));
 
+//Funcionarios
+
+router.get('/funcionarios', (req, res) => funcionariosController.getFuncionarios(req, res));
+
+router.post('/funcionarios', (req, res) => funcionariosController.postFuncionarios(req, res));
+
+router.put('/funcionarios/:codigo', (req, res) => funcionariosController.putFuncionarios(req, res));
+
+router.delete('/funcionarios/:codigo', (req, res) => funcionariosController.deleteFuncionarios(req, res));
+
 //backup
 
 router.post('/backup', (req, res) => backup.realizarBackup(req, res));
+
+//login
+
+router.post('/login', (req, res) => login.postLogin(req, res));
 
 module.exports = router;

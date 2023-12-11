@@ -33,9 +33,34 @@ exports.itensEditar = async (dados) => {
 }
 
 exports.itensConsultar = async () => {
-    const item = await db.itens.findAll();
-    return item;
-}
+    try {
+      const itens = await db.itens.findAll({
+        include: [
+          {
+            model: db.produtos,
+            as: 'produtos'
+          },
+          {
+            model: db.vendas,
+            as: 'venda',
+            include: [
+              {
+                model: db.funcionarios,
+                as: 'funcionarios',
+                attributes: ['codigo', 'nome']
+              },
+            ],
+          },
+        ],
+      });
+  
+      return itens;
+    } catch (error) {
+      console.error('Erro ao buscar itens:', error);
+      throw new Error('Erro ao buscar itens. Detalhes no console.');
+    }
+};
+  
 
 exports.itensDeletar = async (dados) => {
     const codigo =  dados

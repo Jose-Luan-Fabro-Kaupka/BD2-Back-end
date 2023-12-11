@@ -9,11 +9,11 @@ app.use(express.json());
 
 app.use('/api', routes); 
 
-app.post('/auth', (req, res) => {
-  const { username, password } = req.body;
+app.post('/autenticar', (req, res) => {
+  const { user, senha } = req.body;
 
-  process.env.POSTGRES_USER = username;
-  process.env.POSTGRES_PASS = password;
+  process.env.POSTGRES_USER = user;
+  process.env.POSTGRES_PASS = senha;
 
   responses.sendResponse(res, 200, false, 'OK.', null)
 });

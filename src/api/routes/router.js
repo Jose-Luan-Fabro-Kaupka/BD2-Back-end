@@ -56,8 +56,4 @@ router.delete('/funcionarios/:codigo', (req, res) => funcionariosController.dele
 
 router.post('/backup', (req, res) => backup.realizarBackup(req, res));
 
-//login
-
-router.post('/login', (req, res) => login.postLogin(req, res));
-
 module.exports = router;

@@ -7,11 +7,21 @@ const sequelize = new Sequelize(config.server.dbName, config.server.user, config
   dialect: 'postgres',
 });
 
-const start = async () => {
+
+const start = async (credentials) => {
   try {
+    const sequelize = new Sequelize(
+      config.server.dbName,
+      credentials.user, // Utiliza o usuário recebido
+      credentials.senha, // Utiliza a senha recebida
+      {
+        host: config.server.host,
+        dialect: 'postgres',
+      }
+    );
+
     await sequelize.authenticate();
 
-    //Depois de criar as tabelas, comente esse trecho
     for (const key in db) {
       if (db[key].sync) {
         const model = db[key];
@@ -29,6 +39,8 @@ const start = async () => {
   }
 };
 
+
+
 const stop = async () => {
   try {
     await sequelize.close();
@@ -37,6 +49,7 @@ const stop = async () => {
     console.error('Erro ao fechar conexão:', error);
   }
 };
+
 
 module.exports = {
   sequelize: sequelize,

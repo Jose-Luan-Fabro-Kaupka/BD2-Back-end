@@ -50,5 +50,5 @@ exports.deleteItens = async (req, res) => {
 
   await classItens.itensDeletar(codigo)
 
-  return responses.sendResponse(res, 204, false, 'Item eliminado com sucesso.', null)
+  return responses.sendResponse(res, 200, false, 'Item eliminado com sucesso.', null)
 }
